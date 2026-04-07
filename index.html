@@ -6,667 +6,524 @@
     <title>Helocity Tech Hiring Portal</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap');
-
         :root {
-            --bg: #080808;
-            --surface: #111;
-            --surface2: #1a1a1a;
-            --border: #2a2a2a;
-            --accent: #0070f3;
-            --accent2: #00c6ff;
-            --danger: #ff4444;
-            --success: #00e676;
-            --text: #f0f0f0;
-            --muted: #666;
+            --bg:#080808;--surface:#111;--surface2:#1a1a1a;--border:#2a2a2a;
+            --accent:#0070f3;--accent2:#00c6ff;--danger:#ff4444;--success:#00e676;
+            --text:#f0f0f0;--muted:#666;
         }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            font-family: 'Syne', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            padding: 40px 20px;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background: radial-gradient(ellipse at 20% 20%, rgba(0,112,243,0.07) 0%, transparent 60%),
-                        radial-gradient(ellipse at 80% 80%, rgba(0,198,255,0.05) 0%, transparent 60%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .card {
-            position: relative;
-            z-index: 1;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 48px;
-            max-width: 860px;
-            margin: 0 auto;
-            box-shadow: 0 0 60px rgba(0,0,0,0.9), 0 0 0 1px rgba(255,255,255,0.03) inset;
-        }
-
-        .logo-area {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .logo-area h1 {
-            font-size: 2.6rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-            background: linear-gradient(135deg, #fff 30%, var(--accent2));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .logo-area p {
-            color: var(--muted);
-            font-family: 'Space Mono', monospace;
-            font-size: 0.78rem;
-            letter-spacing: 2px;
-            margin-top: 6px;
-            text-transform: uppercase;
-        }
-
-        .divider {
-            height: 1px;
-            background: linear-gradient(to right, transparent, var(--border), transparent);
-            margin: 30px 0;
-        }
-
-        label.field-label {
-            display: block;
-            font-size: 0.78rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--muted);
-            margin-bottom: 8px;
-        }
-
-        input[type="text"], select {
-            width: 100%;
-            padding: 14px 16px;
-            margin-bottom: 28px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            background: var(--surface2);
-            color: var(--text);
-            font-size: 1rem;
-            font-family: 'Syne', sans-serif;
-            transition: border-color 0.2s, box-shadow 0.2s;
-            outline: none;
-        }
-
-        input[type="text"]:focus, select:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(0,112,243,0.15);
-        }
-
-        select option { background: #222; }
-
-        /* Rules */
-        .warning-header {
-            color: var(--danger);
-            font-family: 'Space Mono', monospace;
-            font-size: 0.75rem;
-            text-align: center;
-            border: 1px dashed var(--danger);
-            padding: 10px;
-            border-radius: 6px;
-            margin-bottom: 14px;
-            letter-spacing: 1px;
-        }
-
-        .rules-container {
-            background: #000;
-            border: 1px solid #2a2a2a;
-            padding: 24px;
-            height: 380px;
-            overflow-y: scroll;
-            border-radius: 8px;
-            font-family: 'Space Mono', monospace;
-            font-size: 0.8rem;
-            line-height: 1.8;
-            white-space: pre-wrap;
-            color: #ccc;
-        }
-
-        .rules-container::-webkit-scrollbar { width: 6px; }
-        .rules-container::-webkit-scrollbar-track { background: #111; }
-        .rules-container::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
-
-        .checkbox-container {
-            display: flex;
-            align-items: flex-start;
-            gap: 14px;
-            background: var(--surface2);
-            border: 1px solid var(--border);
-            border-left: 4px solid var(--accent);
-            padding: 18px 20px;
-            border-radius: 8px;
-            margin-top: 16px;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .checkbox-container:hover { background: #222; }
-
-        input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            margin-top: 2px;
-            accent-color: var(--accent);
-            cursor: pointer;
-            flex-shrink: 0;
-        }
-
-        .checkbox-container label {
-            font-size: 0.9rem;
-            line-height: 1.5;
-            cursor: pointer;
-            color: #ccc;
-        }
-
-        /* Quiz */
-        #quizArea { margin-top: 36px; }
-
-        .quiz-header {
-            font-size: 1.4rem;
-            font-weight: 800;
-            color: var(--accent2);
-            margin-bottom: 8px;
-        }
-
-        .quiz-meta {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.75rem;
-            color: var(--muted);
-            margin-bottom: 28px;
-            letter-spacing: 1px;
-        }
-
-        .question-block {
-            background: var(--surface2);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 22px 24px;
-            margin-bottom: 16px;
-            transition: border-color 0.2s;
-        }
-
-        .question-block:hover { border-color: #444; }
-
-        .question-text {
-            display: block;
-            font-weight: 700;
-            font-size: 0.95rem;
-            color: #e0e0e0;
-            margin-bottom: 16px;
-            line-height: 1.5;
-        }
-
-        .options-grid {
-            display: grid;
-            gap: 8px;
-        }
-
-        .option-label {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 14px;
-            border-radius: 6px;
-            border: 1px solid transparent;
-            background: rgba(255,255,255,0.03);
-            cursor: pointer;
-            font-size: 0.88rem;
-            color: #bbb;
-            transition: all 0.15s;
-        }
-
-        .option-label:hover {
-            background: rgba(0,112,243,0.1);
-            border-color: rgba(0,112,243,0.3);
-            color: #fff;
-        }
-
-        .option-label input[type="radio"] {
-            accent-color: var(--accent);
-            width: 16px;
-            height: 16px;
-            flex-shrink: 0;
-        }
-
-        /* Loading state */
-        .quiz-loading {
-            text-align: center;
-            padding: 48px 24px;
-            color: var(--muted);
-        }
-
-        .spinner {
-            width: 36px;
-            height: 36px;
-            border: 3px solid var(--border);
-            border-top-color: var(--accent);
-            border-radius: 50%;
-            animation: spin 0.7s linear infinite;
-            margin: 0 auto 16px;
-        }
-
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        .quiz-loading p {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-        }
-
-        /* Button */
-        .submit-btn {
-            display: block;
-            width: 100%;
-            padding: 18px;
-            margin-top: 28px;
-            background: var(--accent);
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            font-family: 'Syne', sans-serif;
-            font-size: 1.05rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
-        }
-
-        .submit-btn:hover:not(:disabled) {
-            background: #0080ff;
-            box-shadow: 0 0 24px rgba(0,112,243,0.4);
-        }
-
-        .submit-btn:active:not(:disabled) { transform: scale(0.99); }
-        .submit-btn:disabled { background: #222; color: var(--muted); cursor: not-allowed; }
-
-        /* Status */
-        #status {
-            margin-top: 28px;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            font-weight: 700;
-            font-size: 1.15rem;
-            display: none;
-        }
-
-        #status.success {
-            background: rgba(0,230,118,0.08);
-            border: 1px solid rgba(0,230,118,0.3);
-            color: var(--success);
-            display: block;
-        }
-
-        #status.fail {
-            background: rgba(255,68,68,0.08);
-            border: 1px solid rgba(255,68,68,0.3);
-            color: var(--danger);
-            display: block;
-        }
-
-        #status.info {
-            background: rgba(0,112,243,0.08);
-            border: 1px solid rgba(0,112,243,0.3);
-            color: var(--accent2);
-            display: block;
-        }
-
-        .hidden { display: none !important; }
-
-        .progress-bar-wrap {
-            background: var(--border);
-            border-radius: 4px;
-            height: 4px;
-            margin-bottom: 28px;
-            overflow: hidden;
-        }
-
-        .progress-bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent), var(--accent2));
-            border-radius: 4px;
-            transition: width 0.4s ease;
-        }
+        *{box-sizing:border-box;margin:0;padding:0;}
+        body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:40px 20px;}
+        body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+            background:radial-gradient(ellipse at 20% 20%,rgba(0,112,243,.07) 0%,transparent 60%),
+                       radial-gradient(ellipse at 80% 80%,rgba(0,198,255,.05) 0%,transparent 60%);}
+        .card{position:relative;z-index:1;background:var(--surface);border:1px solid var(--border);
+            border-radius:16px;padding:48px;max-width:860px;margin:0 auto;
+            box-shadow:0 0 60px rgba(0,0,0,.9),0 0 0 1px rgba(255,255,255,.03) inset;}
+        .logo-area{text-align:center;margin-bottom:40px;}
+        .logo-area h1{font-size:2.6rem;font-weight:800;letter-spacing:-1px;
+            background:linear-gradient(135deg,#fff 30%,var(--accent2));
+            -webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+        .logo-area p{color:var(--muted);font-family:'Space Mono',monospace;font-size:.78rem;
+            letter-spacing:2px;margin-top:6px;text-transform:uppercase;}
+        .divider{height:1px;background:linear-gradient(to right,transparent,var(--border),transparent);margin:30px 0;}
+        label.field-label{display:block;font-size:.78rem;font-weight:700;letter-spacing:2px;
+            text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+        input[type="text"],input[type="email"],select{
+            width:100%;padding:14px 16px;margin-bottom:28px;border-radius:8px;
+            border:1px solid var(--border);background:var(--surface2);color:var(--text);
+            font-size:1rem;font-family:'Syne',sans-serif;
+            transition:border-color .2s,box-shadow .2s;outline:none;}
+        input[type="text"]:focus,input[type="email"]:focus,select:focus{
+            border-color:var(--accent);box-shadow:0 0 0 3px rgba(0,112,243,.15);}
+        select option{background:#222;}
+        .warning-header{color:var(--danger);font-family:'Space Mono',monospace;font-size:.75rem;
+            text-align:center;border:1px dashed var(--danger);padding:10px;
+            border-radius:6px;margin-bottom:14px;letter-spacing:1px;}
+        .rules-container{background:#000;border:1px solid #2a2a2a;padding:24px;height:380px;
+            overflow-y:scroll;border-radius:8px;font-family:'Space Mono',monospace;
+            font-size:.8rem;line-height:1.8;white-space:pre-wrap;color:#ccc;}
+        .rules-container::-webkit-scrollbar{width:6px;}
+        .rules-container::-webkit-scrollbar-track{background:#111;}
+        .rules-container::-webkit-scrollbar-thumb{background:#333;border-radius:3px;}
+        .checkbox-container{display:flex;align-items:flex-start;gap:14px;background:var(--surface2);
+            border:1px solid var(--border);border-left:4px solid var(--accent);
+            padding:18px 20px;border-radius:8px;margin-top:16px;cursor:pointer;transition:background .2s;}
+        .checkbox-container:hover{background:#222;}
+        input[type="checkbox"]{width:20px;height:20px;margin-top:2px;accent-color:var(--accent);cursor:pointer;flex-shrink:0;}
+        .checkbox-container label{font-size:.9rem;line-height:1.5;cursor:pointer;color:#ccc;}
+ 
+        /* Timer */
+        .timer-wrap{margin-bottom:6px;}
+        .timer-bar-bg{background:var(--border);border-radius:4px;height:6px;overflow:hidden;}
+        .timer-bar-fill{height:100%;width:100%;border-radius:4px;
+            background:linear-gradient(90deg,var(--success),var(--accent2));
+            transition:width 1s linear,background 1s ease;}
+        .timer-bar-fill.warn{background:linear-gradient(90deg,#ff9800,var(--danger));}
+        .timer-label{font-family:'Space Mono',monospace;font-size:.75rem;color:var(--muted);
+            text-align:right;margin-top:5px;margin-bottom:20px;}
+        .timer-label span{color:var(--text);font-weight:700;}
+        .timer-label.urgent span{color:var(--danger);}
+ 
+        #quizArea{margin-top:36px;}
+        .quiz-header{font-size:1.4rem;font-weight:800;color:var(--accent2);margin-bottom:8px;}
+        .quiz-meta{font-family:'Space Mono',monospace;font-size:.75rem;color:var(--muted);
+            margin-bottom:14px;letter-spacing:1px;}
+        .question-block{background:var(--surface2);border:1px solid var(--border);
+            border-radius:10px;padding:22px 24px;margin-bottom:16px;transition:border-color .2s;}
+        .question-block:hover{border-color:#444;}
+        .question-text{display:block;font-weight:700;font-size:.95rem;color:#e0e0e0;
+            margin-bottom:16px;line-height:1.5;}
+        .options-grid{display:grid;gap:8px;}
+        .option-label{display:flex;align-items:center;gap:12px;padding:10px 14px;
+            border-radius:6px;border:1px solid transparent;background:rgba(255,255,255,.03);
+            cursor:pointer;font-size:.88rem;color:#bbb;transition:all .15s;}
+        .option-label:hover{background:rgba(0,112,243,.1);border-color:rgba(0,112,243,.3);color:#fff;}
+        .option-label input[type="radio"]{accent-color:var(--accent);width:16px;height:16px;flex-shrink:0;}
+        .submit-btn{display:block;width:100%;padding:18px;margin-top:28px;
+            background:var(--accent);color:#fff;border:none;border-radius:8px;
+            font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;
+            letter-spacing:1px;cursor:pointer;transition:background .2s,transform .1s,box-shadow .2s;}
+        .submit-btn:hover:not(:disabled){background:#0080ff;box-shadow:0 0 24px rgba(0,112,243,.4);}
+        .submit-btn:active:not(:disabled){transform:scale(.99);}
+        .submit-btn:disabled{background:#222;color:var(--muted);cursor:not-allowed;}
+        #status{margin-top:28px;padding:24px;border-radius:10px;text-align:center;
+            font-weight:700;font-size:1.05rem;display:none;line-height:1.8;}
+        #status.success{background:rgba(0,230,118,.08);border:1px solid rgba(0,230,118,.3);color:var(--success);display:block;}
+        #status.fail{background:rgba(255,68,68,.08);border:1px solid rgba(255,68,68,.3);color:var(--danger);display:block;}
+        #status.info{background:rgba(0,112,243,.08);border:1px solid rgba(0,112,243,.3);color:var(--accent2);display:block;}
+        .email-note{margin-top:18px;padding:16px 18px;background:rgba(0,198,255,.07);
+            border:1px solid rgba(0,198,255,.22);border-radius:8px;
+            font-family:'Space Mono',monospace;font-size:.8rem;color:#8dd8f5;
+            font-weight:400;line-height:1.75;text-align:left;}
+        .hidden{display:none!important;}
+        .progress-bar-wrap{background:var(--border);border-radius:4px;height:4px;margin-bottom:28px;overflow:hidden;}
+        .progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));
+            border-radius:4px;transition:width .4s ease;}
     </style>
 </head>
 <body>
-
 <div class="card">
     <div class="logo-area">
         <h1>Helocity Tech</h1>
-        <p>Official Application & Recruitment Portal</p>
+        <p>Official Application &amp; Recruitment Portal</p>
     </div>
-
     <div class="divider"></div>
-
+ 
     <label class="field-label">Full Name</label>
     <input type="text" id="name" placeholder="Enter your full name">
-
+ 
+    <label class="field-label">Your Email Address</label>
+    <input type="email" id="applicantEmail" placeholder="Enter your email address" oninput="onFormChange()">
+ 
     <label class="field-label">Position</label>
     <select id="role" onchange="onFormChange()">
         <option value="">— Select a position —</option>
         <option value="Employee">Employee (HTML Specialist)</option>
         <option value="Stock Handler">Stock Handler</option>
     </select>
-
+ 
     <div id="legalArea">
         <div class="warning-header">⚠ CONFIDENTIAL — NOT FOR PUBLIC RELEASE ⚠</div>
-        <div class="rules-container"><strong>Version 1 - Original - Company Rules & Regulations</strong>
+        <div class="rules-container"><strong>Version 1 - Original - Company Rules &amp; Regulations</strong>
 For Company Personnel / Members Only
-
+ 
 1. NOTE: THIS AGREEMENT IS NOT TO BE RELEASED TO PUBLIC OR WILL FACE CHARGES OR PUNISHMENT.
-
+ 
 - Any Member Will be directly fired if found harassing or not being friendly; if decided you will be given a second chance.
 - If Company Employee, Executive, Director leaves — compulsory to give a resignation letter prior by 2 days.
 - We will try to make everything Free except our needs for doing the project and getting paid on time.
-- We are able to change the Rules & Regulations without notice and every member has to check and read it weekly if updated.
+- We are able to change the Rules &amp; Regulations without notice and every member has to check and read it weekly if updated.
 - Attendance has to be DAILY every day in the employee portal.
-
-<strong>Copyright Laws — Section: Intellectual Property & Departure</strong>
-
+ 
+<strong>Copyright Laws — Section: Intellectual Property &amp; Departure</strong>
+ 
 1. Ownership of Work (Copyright): All code, designs, logos, and AI models created for Helocity Tech (including Groquni AI, GroqMed AI, Shorcuteez, and Gamehub) are the property of the company.
 Team Contribution: Any feature you build while a member of the team belongs to the Helocity Tech project.
 No Copying: Members may not copy, re-upload, or sell Helocity Tech source code to other platforms without the CEO's written permission.
-
+ 
 2. Exit Agreement
 When a member leaves the team (voluntarily or otherwise), they must agree to the following:
 The "No-Take" Rule: You may not take "internal-only" tools to use for a different project.
 Confidentiality: You must not share private company information, such as Supabase API keys, database structures, or future project plans, with anyone outside of Helocity Tech.
 Deletion of Access: Upon leaving, all administrative access to GitHub, Vercel, and Supabase projects will be removed immediately.
-
+ 
 3. Credit for Work
 We believe in fairness. If a member leaves in good standing:
 They may list their role on their personal portfolio.
 They will still be credited for the specific features they built while part of the team.
-
+ 
 <strong>Official Code of Conduct</strong>
-
-1. Professionalism & Communication
+ 
+1. Professionalism &amp; Communication
 The "24-Hour" Rule: All members should acknowledge important messages within 24 hours.
 Respect the Roles: If the Stock Handler says we are low on assets or the Lawyer flags a copyright issue, the team must listen and discuss it respectfully.
 No "Ghosting": If you need a break, just let the CEO or VP know.
-
+ 
 2. Technical Responsibility
 Secure the Keys: Never share Supabase or Vercel API keys outside the team.
 If a key is leaked, it must be reported to the CEO immediately.
 Code Quality: Before pushing a major update, describe the changes to the team.
 No "Trolling" the Portal: The Employee Attendance Portal is for work.
-
-3. Attendance & Deadlines
+ 
+3. Attendance &amp; Deadlines
 The Midnight Deadline: All members must log their attendance before 12:00 AM to stay "Active."
-Task Ownership: If you agree to finish a feature, try your best to hit the deadline.
-If you can't, tell the team early.
-
-4. Innovation & Creativity
+Task Ownership: If you agree to finish a feature, try your best to hit the deadline. If you can't, tell the team early.
+ 
+4. Innovation &amp; Creativity
 The "Best Idea Wins": It doesn't matter if you are the CEO or the Employee — share your ideas!
 Constructive Feedback: If someone's code has a bug, don't make fun of it. Help them fix it. "We win together, we debug together."
-
+ 
 5. Conflict Resolution
 The Lawyer's Role: If two members disagree on a feature or rule, the Lawyer will offer a fair solution.
 Final Say: The CEO has the final vote to keep the project moving forward.
-
-(Once signed, cannot be erased. After signing, you must follow "The Rules & Regulations".)
+ 
+(Once signed, cannot be erased. After signing, you must follow "The Rules &amp; Regulations".)
 NOTE: THIS AGREEMENT IS NOT TO BE RELEASED TO PUBLIC OR WILL FACE CHARGES OR PUNISHMENT.</div>
-
-        <div class="checkbox-container" onclick="document.getElementById('agree').click(); onFormChange();">
+        <div class="checkbox-container" onclick="document.getElementById('agree').click();onFormChange();">
             <input type="checkbox" id="agree" onclick="event.stopPropagation();" onchange="onFormChange()">
-            <label>I have read the full document and agree to all Helocity Tech Rules & Regulations.</label>
+            <label>I have read the full document and agree to all Helocity Tech Rules &amp; Regulations.</label>
         </div>
     </div>
-
+ 
     <div id="quizArea" class="hidden">
         <div class="divider" style="margin-top:36px;"></div>
         <div class="quiz-header" id="quizTitle"></div>
         <div class="quiz-meta" id="quizMeta"></div>
+        <div class="timer-wrap">
+            <div class="timer-bar-bg"><div class="timer-bar-fill" id="timerBar"></div></div>
+            <div class="timer-label" id="timerLabel">Time remaining: <span id="timerCount">3:20</span></div>
+        </div>
         <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressBar" style="width:0%"></div></div>
         <div id="questions"></div>
         <button class="submit-btn" id="submitBtn" onclick="processResult()" disabled>Submit Application</button>
     </div>
-
+ 
     <div id="status"></div>
 </div>
-
+ 
 <script>
-    const quizData = {
-        Employee: [
-            { q: "What does HTML stand for?", a: "HyperText Markup Language" },
-            { q: "Which tag is used for the largest heading?", a: "<h1>" },
-            { q: "Which tag defines a hyperlink?", a: "<a>" },
-            { q: "What is the correct tag for a line break?", a: "<br>" },
-            { q: "Which character indicates an end/closing tag?", a: "/" },
-            { q: "How do you open a link in a new tab?", a: "target='_blank'" },
-            { q: "Which tag creates a bulleted (unordered) list?", a: "<ul>" },
-            { q: "Which tag creates a numbered (ordered) list?", a: "<ol>" },
-            { q: "What is the correct HTML for a checkbox?", a: "<input type='checkbox'>" },
-            { q: "Which tag embeds an image?", a: "<img>" },
-            { q: "Which attribute provides alternative text for images?", a: "alt" },
-            { q: "Which tag defines the browser tab title?", a: "<title>" },
-            { q: "Which semantic element is used for a site footer?", a: "<footer>" },
-            { q: "Which tag creates a dropdown list?", a: "<select>" },
-            { q: "Which attribute gives an element a unique identifier?", a: "id" },
-            { q: "What is the purpose of <!DOCTYPE html>?", a: "Declares the document type as HTML5" },
-            { q: "Which tag groups block-level elements?", a: "<div>" },
-            { q: "Which tag makes text bold and important?", a: "<strong>" },
-            { q: "Which tag defines a table row?", a: "<tr>" },
-            { q: "Which tag defines a table data cell?", a: "<td>" }
-        ],
-        "Stock Handler": [
-            { q: "What does FIFO stand for?", a: "First In, First Out" },
-            { q: "What is a 'Stockout'?", a: "Running out of inventory" },
-            { q: "What does SKU stand for?", a: "Stock Keeping Unit" },
-            { q: "What is 'Lead Time'?", a: "Time from ordering to receiving goods" },
-            { q: "What is Safety Stock?", a: "Extra stock kept to prevent shortages" },
-            { q: "What does JIT stand for?", a: "Just In Time" },
-            { q: "What does inventory turnover measure?", a: "How quickly stock is sold and replaced" },
-            { q: "What is the primary goal of stock handling?", a: "Accuracy and efficiency" },
-            { q: "Where should high-demand items be placed?", a: "In easily accessible locations" },
-            { q: "What is a Cycle Count?", a: "A partial/ongoing inventory audit" },
-            { q: "What is Dead Stock?", a: "Inventory that cannot be sold or used" },
-            { q: "What is a pallet used for?", a: "A platform for moving and storing goods" },
-            { q: "What is a Backorder?", a: "An order for an item that is currently out of stock" },
-            { q: "What is a packing list?", a: "A document listing all items in a shipment" },
-            { q: "What is the main benefit of using barcodes?", a: "Speed and data accuracy" },
-            { q: "What is carrying cost?", a: "The cost of holding inventory over time" },
-            { q: "What is ABC Analysis in inventory?", a: "Categorizing stock by value/importance" },
-            { q: "What is a Bill of Lading?", a: "A contract between a shipper and carrier" },
-            { q: "Why are labels important in a warehouse?", a: "For organisation and tracking" },
-            { q: "What is 'shrink' in inventory management?", a: "Loss of inventory due to theft or damage" }
-        ]
-    };
-
-    let quizReady = false;
-    let generatedOptions = {}; // { questionIndex: [opt1, opt2, opt3, opt4] } shuffled
-
-    function onFormChange() {
-        const role = document.getElementById('role').value;
-        const agreed = document.getElementById('agree').checked;
-        const quizArea = document.getElementById('quizArea');
-
-        if (role && agreed) {
-            quizArea.classList.remove('hidden');
-            document.getElementById('quizTitle').innerText = role + " Hiring Exam";
-            document.getElementById('quizMeta').innerText = "20 questions · 15 correct needed to pass · Powered by AI";
-            loadQuiz(role);
-        } else {
-            quizArea.classList.add('hidden');
-            quizReady = false;
-            generatedOptions = {};
-        }
-    }
-
-    async function loadQuiz(role) {
-        const questionsDiv = document.getElementById('questions');
-        const submitBtn = document.getElementById('submitBtn');
+// ── Quiz bank with hand-crafted plausible distractors ──────────────────────
+const quizData = {
+    Employee: [
+        {q:"What does HTML stand for?",
+         a:"HyperText Markup Language",
+         w:["HyperText Markdown Language","HighText Machine Language","HyperTransfer Markup Layout"]},
+        {q:"Which tag is used for the largest heading?",
+         a:"&lt;h1&gt;",
+         w:["&lt;h6&gt;","&lt;heading&gt;","&lt;head&gt;"]},
+        {q:"Which tag defines a hyperlink?",
+         a:"&lt;a&gt;",
+         w:["&lt;link&gt;","&lt;href&gt;","&lt;nav&gt;"]},
+        {q:"What is the correct tag for a line break?",
+         a:"&lt;br&gt;",
+         w:["&lt;lb&gt;","&lt;break&gt;","&lt;newline&gt;"]},
+        {q:"Which character indicates an end/closing tag?",
+         a:"/",
+         w:["\\","!","-"]},
+        {q:"How do you open a link in a new tab?",
+         a:"target='_blank'",
+         w:["target='_new'","href='_blank'","open='newtab'"]},
+        {q:"Which tag creates a bulleted (unordered) list?",
+         a:"&lt;ul&gt;",
+         w:["&lt;ol&gt;","&lt;bl&gt;","&lt;list&gt;"]},
+        {q:"Which tag creates a numbered (ordered) list?",
+         a:"&lt;ol&gt;",
+         w:["&lt;ul&gt;","&lt;nl&gt;","&lt;numlist&gt;"]},
+        {q:"What is the correct HTML for a checkbox?",
+         a:"&lt;input type='checkbox'&gt;",
+         w:["&lt;input type='check'&gt;","&lt;checkbox&gt;","&lt;input type='tick'&gt;"]},
+        {q:"Which tag embeds an image?",
+         a:"&lt;img&gt;",
+         w:["&lt;image&gt;","&lt;pic&gt;","&lt;src&gt;"]},
+        {q:"Which attribute provides alternative text for images?",
+         a:"alt",
+         w:["title","desc","caption"]},
+        {q:"Which tag defines the browser tab title?",
+         a:"&lt;title&gt;",
+         w:["&lt;tab&gt;","&lt;header&gt;","&lt;meta&gt;"]},
+        {q:"Which semantic element is used for a site footer?",
+         a:"&lt;footer&gt;",
+         w:["&lt;bottom&gt;","&lt;section&gt;","&lt;div id='footer'&gt;"]},
+        {q:"Which tag creates a dropdown list?",
+         a:"&lt;select&gt;",
+         w:["&lt;dropdown&gt;","&lt;input type='select'&gt;","&lt;option&gt;"]},
+        {q:"Which attribute gives an element a unique identifier?",
+         a:"id",
+         w:["class","name","key"]},
+        {q:"What is the purpose of &lt;!DOCTYPE html&gt;?",
+         a:"Declares the document type as HTML5",
+         w:["Links an external stylesheet","Defines the page language","Sets the character encoding"]},
+        {q:"Which tag groups block-level elements?",
+         a:"&lt;div&gt;",
+         w:["&lt;span&gt;","&lt;section&gt;","&lt;group&gt;"]},
+        {q:"Which tag makes text bold and semantically important?",
+         a:"&lt;strong&gt;",
+         w:["&lt;b&gt;","&lt;bold&gt;","&lt;em&gt;"]},
+        {q:"Which tag defines a table row?",
+         a:"&lt;tr&gt;",
+         w:["&lt;td&gt;","&lt;th&gt;","&lt;row&gt;"]},
+        {q:"Which tag defines a table data cell?",
+         a:"&lt;td&gt;",
+         w:["&lt;tr&gt;","&lt;cell&gt;","&lt;tc&gt;"]}
+    ],
+    "Stock Handler": [
+        {q:"What does FIFO stand for?",
+         a:"First In, First Out",
+         w:["First Item, Final Order","Fast Inventory Flow Out","Fixed Input, Fixed Output"]},
+        {q:"What is a 'Stockout'?",
+         a:"Running out of inventory",
+         w:["Excess inventory overflow","A stock audit process","Removing expired items"]},
+        {q:"What does SKU stand for?",
+         a:"Stock Keeping Unit",
+         w:["Storage Key Utility","Supply Key Unit","Stock Katalog Update"]},
+        {q:"What is 'Lead Time'?",
+         a:"Time from ordering to receiving goods",
+         w:["Time taken to sell all stock","Time to process a customer return","Duration of a stock audit"]},
+        {q:"What is Safety Stock?",
+         a:"Extra stock kept to prevent shortages",
+         w:["Stock stored in a secured warehouse","Hazardous materials inventory","Items reserved for VIP orders"]},
+        {q:"What does JIT stand for?",
+         a:"Just In Time",
+         w:["Job Inventory Tracking","Joint Item Transfer","Just In Transit"]},
+        {q:"What does inventory turnover measure?",
+         a:"How quickly stock is sold and replaced",
+         w:["Total value of warehouse stock","Number of damaged items per month","Frequency of supplier deliveries"]},
+        {q:"What is the primary goal of stock handling?",
+         a:"Accuracy and efficiency",
+         w:["Minimising warehouse size","Reducing supplier costs only","Maximising stock volume always"]},
+        {q:"Where should high-demand items be placed?",
+         a:"In easily accessible locations",
+         w:["At the back of the warehouse","On the highest shelving racks","In a locked secure area"]},
+        {q:"What is a Cycle Count?",
+         a:"A partial/ongoing inventory audit",
+         w:["A full warehouse stock recount","A monthly supplier reconciliation","Counting expired items only"]},
+        {q:"What is Dead Stock?",
+         a:"Inventory that cannot be sold or used",
+         w:["Stock that has not been labelled","Items awaiting quality inspection","Goods in transit between warehouses"]},
+        {q:"What is a pallet used for?",
+         a:"A platform for moving and storing goods",
+         w:["A document tracking shipments","A container for liquid goods","A label printer in the warehouse"]},
+        {q:"What is a Backorder?",
+         a:"An order for an item that is currently out of stock",
+         w:["A cancelled customer order","An order placed by a supplier","A returned order from a customer"]},
+        {q:"What is a packing list?",
+         a:"A document listing all items in a shipment",
+         w:["A warehouse floor plan","A supplier invoice for payment","A schedule for packing shifts"]},
+        {q:"What is the main benefit of using barcodes?",
+         a:"Speed and data accuracy",
+         w:["Reducing the need for suppliers","Lowering product manufacturing cost","Improving product packaging design"]},
+        {q:"What is carrying cost?",
+         a:"The cost of holding inventory over time",
+         w:["The cost of shipping goods to customers","Staff wages in the warehouse","Cost of purchasing new stock"]},
+        {q:"What is ABC Analysis in inventory?",
+         a:"Categorizing stock by value/importance",
+         w:["Alphabetically sorting warehouse items","A method of counting stock daily","Tracking items from A to Z suppliers"]},
+        {q:"What is a Bill of Lading?",
+         a:"A contract between a shipper and carrier",
+         w:["An invoice sent to a customer","A warehouse safety checklist","A supplier payment agreement"]},
+        {q:"Why are labels important in a warehouse?",
+         a:"For organisation and tracking",
+         w:["To make shelves look professional","To satisfy legal requirements only","To show the item purchase price"]},
+        {q:"What is 'shrink' in inventory management?",
+         a:"Loss of inventory due to theft or damage",
+         w:["Reducing overstock by discounting","Compressing package sizes to save space","Lowering order quantities temporarily"]}
+    ]
+};
+ 
+// ── State ──────────────────────────────────────────────────────────────────
+let quizReady = false;
+let generatedOptions = {};
+let timerInterval = null;
+let secondsLeft = 200;
+let timerExpired = false;
+ 
+// ── Form change ────────────────────────────────────────────────────────────
+function onFormChange() {
+    const role  = document.getElementById('role').value;
+    const agreed = document.getElementById('agree').checked;
+    const email = document.getElementById('applicantEmail').value.trim();
+    const quizArea = document.getElementById('quizArea');
+ 
+    if (role && agreed && email) {
+        quizArea.classList.remove('hidden');
+        document.getElementById('quizTitle').innerText = role + " Hiring Exam";
+        document.getElementById('quizMeta').innerText =
+            "20 questions · 15 correct to pass · 200-second time limit";
+        loadQuiz(role);
+    } else {
+        quizArea.classList.add('hidden');
         quizReady = false;
-        submitBtn.disabled = true;
         generatedOptions = {};
-
-        questionsDiv.innerHTML = `
-            <div class="quiz-loading">
-                <div class="spinner"></div>
-                <p>Generating quiz questions...</p>
+        clearTimer();
+    }
+}
+ 
+// ── Timer ──────────────────────────────────────────────────────────────────
+function clearTimer() {
+    if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+}
+ 
+function startTimer() {
+    clearTimer();
+    secondsLeft = 200;
+    timerExpired = false;
+    renderTimer();
+    timerInterval = setInterval(() => {
+        secondsLeft--;
+        renderTimer();
+        if (secondsLeft <= 0) {
+            clearTimer();
+            timerExpired = true;
+            onTimerExpired();
+        }
+    }, 1000);
+}
+ 
+function renderTimer() {
+    const m = Math.floor(secondsLeft / 60);
+    const s = secondsLeft % 60;
+    document.getElementById('timerCount').textContent = m + ":" + String(s).padStart(2,'0');
+    const pct = (secondsLeft / 200) * 100;
+    const bar = document.getElementById('timerBar');
+    bar.style.width = pct + '%';
+    const lbl = document.getElementById('timerLabel');
+    if (secondsLeft <= 40) { bar.classList.add('warn'); lbl.classList.add('urgent'); }
+    else { bar.classList.remove('warn'); lbl.classList.remove('urgent'); }
+}
+ 
+function onTimerExpired() {
+    document.getElementById('submitBtn').disabled = true;
+    document.querySelectorAll('input[type="radio"]').forEach(r => r.disabled = true);
+    const s = document.getElementById('status');
+    s.className = 'fail';
+    s.textContent = "⏰ Time's up! You didn't finish within 200 seconds. Please reload the page to try again.";
+}
+ 
+// ── Load quiz ──────────────────────────────────────────────────────────────
+function loadQuiz(role) {
+    const qDiv = document.getElementById('questions');
+    const btn  = document.getElementById('submitBtn');
+    quizReady = false;
+    btn.disabled = true;
+    generatedOptions = {};
+    clearTimer();
+    document.getElementById('progressBar').style.width = '0%';
+ 
+    const questions = quizData[role];
+    qDiv.innerHTML = "";
+ 
+    questions.forEach((item, idx) => {
+        // Decode HTML entities for comparison purposes
+        const correct = item.a;
+        const opts = shuffle([correct, ...item.w]);
+        generatedOptions[idx] = { correct };
+ 
+        const optHTML = opts.map(opt => `
+            <label class="option-label">
+                <input type="radio" name="q${idx}" value="${safeVal(opt)}" onchange="updateProgress()">
+                <span>${opt}</span>
+            </label>`).join('');
+ 
+        qDiv.innerHTML += `
+            <div class="question-block">
+                <span class="question-text">${idx+1}. ${item.q}</span>
+                <div class="options-grid">${optHTML}</div>
             </div>`;
-
-        document.getElementById('progressBar').style.width = '0%';
-
-        const questions = quizData[role];
-
-        // Build a single prompt to generate all wrong answers at once
-        const prompt = `You are generating wrong answer choices for a quiz.
-For each question below, provide exactly 3 WRONG answer options (not the correct answer).
-Keep each wrong option short (1–7 words), plausible but clearly incorrect.
-
-Return ONLY a JSON array of arrays, like:
-[["wrong1","wrong2","wrong3"],["wrong1","wrong2","wrong3"],...]
-
-No explanation, no markdown, no extra text. Exactly ${questions.length} inner arrays.
-
-Questions and correct answers:
-${questions.map((q, i) => `${i+1}. Q: "${q.q}" | Correct: "${q.a}"`).join('\n')}`;
-
-        let wrongAnswers = null;
-
+    });
+ 
+    quizReady = true;
+    btn.disabled = false;
+    updateProgress();
+    startTimer();
+}
+ 
+// ── Helpers ────────────────────────────────────────────────────────────────
+function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length-1; i > 0; i--) {
+        const j = Math.floor(Math.random()*(i+1));
+        [a[i],a[j]] = [a[j],a[i]];
+    }
+    return a;
+}
+ 
+function safeVal(str) {
+    return String(str).replace(/"/g,'&quot;');
+}
+ 
+function updateProgress() {
+    const total = quizData[document.getElementById('role').value]?.length || 20;
+    const answered = document.querySelectorAll('.options-grid input[type="radio"]:checked').length;
+    document.getElementById('progressBar').style.width = ((answered/total)*100)+'%';
+}
+ 
+// ── Submit ─────────────────────────────────────────────────────────────────
+async function processResult() {
+    if (timerExpired) return;
+ 
+    const name  = document.getElementById('name').value.trim();
+    const email = document.getElementById('applicantEmail').value.trim();
+    const role  = document.getElementById('role').value;
+    const statusEl = document.getElementById('status');
+ 
+    if (!name)  { alert("Please enter your full name."); return; }
+    if (!email) { alert("Please enter your email address."); return; }
+    if (!quizReady) { alert("Quiz is not ready, please wait."); return; }
+ 
+    // Score
+    let score = 0;
+    const total = quizData[role].length;
+    for (let i = 0; i < total; i++) {
+        const sel = document.querySelector(`input[name="q${i}"]:checked`);
+        if (sel && sel.value === generatedOptions[i].correct) score++;
+    }
+ 
+    clearTimer();
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+ 
+    if (score >= 15) {
+        statusEl.className = 'info';
+        statusEl.innerHTML = "⏳ Submitting your application...";
+        statusEl.style.display = 'block';
+ 
+        // Send to Formspree
         try {
-            const response = await fetch("https://api.anthropic.com/v1/messages", {
+            await fetch("https://formspree.io/f/maqlvbjk", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: { "Content-Type": "application/json", "Accept": "application/json" },
                 body: JSON.stringify({
-                    model: "claude-sonnet-4-20250514",
-                    max_tokens: 1000,
-                    messages: [{ role: "user", content: prompt }]
+                    name:     name,
+                    email:    email,
+                    position: role,
+                    score:    score + "/" + total,
+                    result:   "PASSED",
+                    _subject: "New Helocity Tech Application — " + name + " (" + role + ")"
                 })
             });
-
-            const data = await response.json();
-            const text = data.content.map(b => b.text || "").join("").trim()
-                .replace(/```json|```/g, "").trim();
-            wrongAnswers = JSON.parse(text);
-        } catch (e) {
-            console.warn("AI generation failed, using fallback wrong answers.", e);
+        } catch(e) {
+            console.warn("Formspree submission error:", e);
         }
-
-        // Render questions
-        questionsDiv.innerHTML = "";
-        questions.forEach((item, index) => {
-            let options;
-
-            if (wrongAnswers && wrongAnswers[index] && wrongAnswers[index].length === 3) {
-                // Mix correct answer with 3 AI-generated wrong ones, then shuffle
-                options = [...wrongAnswers[index], item.a];
-                options = shuffle(options);
-            } else {
-                // Fallback: just show correct + 3 generic placeholders shuffled
-                options = shuffle([item.a, "None of the above", "All of the above", "Not applicable"]);
-            }
-
-            generatedOptions[index] = { options, correct: item.a };
-
-            const optionsHTML = options.map((opt, oi) => `
-                <label class="option-label">
-                    <input type="radio" name="q${index}" value="${escapeVal(opt)}" onchange="updateProgress()">
-                    <span>${opt}</span>
-                </label>`).join('');
-
-            questionsDiv.innerHTML += `
-                <div class="question-block">
-                    <span class="question-text">${index + 1}. ${item.q}</span>
-                    <div class="options-grid">${optionsHTML}</div>
-                </div>`;
-        });
-
-        quizReady = true;
-        submitBtn.disabled = false;
-        updateProgress();
+ 
+        statusEl.className = 'success';
+        statusEl.innerHTML =
+            `🎉 Congratulations, <strong>${name}</strong>!<br>` +
+            `You scored <strong>${score}/${total}</strong> — you have passed the Helocity Tech hiring exam.` +
+            `<div class="email-note">` +
+            `📧 An email from <strong>harshj2014@outlook.com</strong> will be sent to your email address:<br>` +
+            `<strong>${email}</strong><br><br>` +
+            `This email will confirm your administered test and outline the next steps in your onboarding. Please check your inbox and spam folder.` +
+            `</div>`;
+ 
+    } else {
+        statusEl.className = 'fail';
+        statusEl.textContent =
+            `❌ Sorry ${name}, you scored ${score}/${total}. ` +
+            `You need at least 15 correct answers to pass. Please try again.`;
+        btn.disabled = false;
+        startTimer(); // restart timer for retry
     }
-
-    function shuffle(arr) {
-        const a = [...arr];
-        for (let i = a.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [a[i], a[j]] = [a[j], a[i]];
-        }
-        return a;
-    }
-
-    function escapeVal(str) {
-        return str.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-    }
-
-    function updateProgress() {
-        const total = quizData[document.getElementById('role').value]?.length || 20;
-        const answered = document.querySelectorAll('.options-grid input[type="radio"]:checked').length;
-        document.getElementById('progressBar').style.width = ((answered / total) * 100) + '%';
-    }
-
-    async function processResult() {
-        const name = document.getElementById('name').value.trim();
-        const role = document.getElementById('role').value;
-        const statusEl = document.getElementById('status');
-
-        if (!name) return alert("Please enter your full name.");
-        if (!quizReady) return alert("Quiz is still loading, please wait.");
-
-        // Score: compare selected value against correct answer
-        let score = 0;
-        const total = quizData[role].length;
-
-        for (let i = 0; i < total; i++) {
-            const selected = document.querySelector(`input[name="q${i}"]:checked`);
-            if (selected && generatedOptions[i] && selected.value === generatedOptions[i].correct) {
-                score++;
-            }
-        }
-
-        const submitBtn = document.getElementById('submitBtn');
-        submitBtn.disabled = true;
-
-        if (score >= 15) {
-            statusEl.className = 'info';
-            statusEl.textContent = "Processing your application...";
-
-            try {
-                const response = await fetch("https://formspree.io/f/maqlvbjk", {
-                    method: "POST",
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        message: `${name} applied for ${role} and passed`,
-                        score: `${score}/${total}`
-                    })
-                });
-
-                if (response.ok) {
-                    statusEl.className = 'success';
-                    statusEl.textContent = `🎉 Congratulations ${name}! You scored ${score}/${total}. You're hired!`;
-                } else {
-                    throw new Error("Form submission failed");
-                }
-            } catch {
-                statusEl.className = 'success';
-                statusEl.textContent = `🎉 Congratulations ${name}! You scored ${score}/${total}. You're hired!`;
-            }
-        } else {
-            statusEl.className = 'fail';
-            statusEl.textContent = `❌ Sorry ${name}, you scored ${score}/${total}. You need at least 15 to pass. Please try again.`;
-            submitBtn.disabled = false;
-        }
-    }
+}
 </script>
 </body>
 </html>
