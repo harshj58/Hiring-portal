@@ -5,76 +5,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Helocity Tech Hiring Portal</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #121212; color: #e0e0e0; max-width: 800px; margin: 40px auto; padding: 20px; }
-        .card { background: #1e1e1e; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0f0f0f; color: #e0e0e0; max-width: 900px; margin: 40px auto; padding: 20px; }
+        .card { background: #1a1a1a; padding: 40px; border-radius: 12px; border: 1px solid #333; box-shadow: 0 10px 30px rgba(0,0,0,0.7); }
         .hidden { display: none; }
         
         /* Rules & Regulations Section */
-        .rules-box { 
-            background: #111; 
-            border: 1px solid #444; 
-            padding: 15px; 
-            height: 250px; 
-            overflow-y: scroll; 
-            margin-bottom: 15px; 
-            font-size: 0.9em;
-            color: #ccc;
-        }
-        .rules-box h4 { color: #0070f3; margin-top: 0; }
-        .checkbox-container { margin-bottom: 20px; font-weight: bold; color: #fff; }
-
-        input[type="text"], select { width: 100%; padding: 10px; margin: 10px 0 20px 0; border-radius: 4px; border: 1px solid #333; background: #2a2a2a; color: white; }
-        .quiz-container { border-top: 1px solid #333; padding-top: 20px; }
-        .question { margin-bottom: 15px; background: #252525; padding: 15px; border-radius: 5px; }
-        button { background: #0070f3; color: white; border: none; padding: 12px 25px; cursor: pointer; border-radius: 5px; font-weight: bold; width: 100%; }
-        button:disabled { background: #444; cursor: not-allowed; }
-        #status { margin-top: 20px; font-weight: bold; text-align: center; }
+        .rules-container { background: #000; border: 2px solid #444; padding: 25px; height: 400px; overflow-y: scroll; margin-bottom: 20px; border-radius: 8px; }
+        .rules-content { white-space: pre-line; line-height: 1.6; font-size: 0.95em; }
+        .warning-text { color: #ff5252; font-weight: bold; text-align: center; border: 1px solid #ff5252; padding: 10px; margin-bottom: 20px; text-transform: uppercase; }
+        
+        .checkbox-container { background: #252525; padding: 15px; border-radius: 6px; margin-bottom: 25px; display: flex; align-items: center; gap: 10px; border-left: 5px solid #0070f3; }
+        input[type="text"], select { width: 100%; padding: 12px; margin: 10px 0 25px 0; border-radius: 6px; border: 1px solid #444; background: #2a2a2a; color: white; font-size: 1rem; }
+        
+        .question { margin-bottom: 20px; background: #222; padding: 20px; border-radius: 8px; border-left: 4px solid #444; }
+        button { background: #0070f3; color: white; border: none; padding: 15px; cursor: pointer; border-radius: 6px; font-weight: bold; width: 100%; font-size: 1.1rem; transition: 0.3s; }
+        button:disabled { background: #333; color: #777; cursor: not-allowed; }
+        button:not(:disabled):hover { background: #005bc1; }
+        #status { margin-top: 25px; font-weight: bold; text-align: center; font-size: 1.2rem; }
     </style>
 </head>
 <body>
 
 <div class="card">
-    <h2>Application Portal</h2>
+    <h1 style="text-align: center; color: #0070f3;">Helocity Tech Application</h1>
+    
     <form id="applicationForm">
-        <label for="applicantName">Enter Your Name:</label>
-        <input type="text" id="applicantName" placeholder="e.g. John Doe" required>
+        <label>Full Name:</label>
+        <input type="text" id="applicantName" placeholder="Enter your full name" required>
 
-        <label for="roleSelect">Select Position:</label>
-        <select id="roleSelect" onchange="checkRequirements()">
+        <label>Target Role:</label>
+        <select id="roleSelect" onchange="updateUI()">
             <option value="">-- Choose a Role --</option>
             <option value="Employee">Employee</option>
             <option value="Stock Handler">Stock Handler</option>
         </select>
 
-        <div id="rulesSection">
-            <p>Please review our Company Rules & Regulations before proceeding:</p>
-            <div class="rules-box">
-                <h4>Version 1 - Original Company Rules & Regulations [cite: 1]</h4>
-                <p><strong>Note:</strong> This agreement is not to be released to the public[cite: 3].</p>
-                <ul>
-                    <li>Members must be friendly; harassment results in being fired[cite: 4].</li>
-                    <li>Resignation requires a letter 2 days in advance[cite: 5].</li>
-                    <li>Attendance must be logged daily in the portal [cite: 8] before 12:00 AM to stay active[cite: 40, 41].</li>
-                    <li><strong>Copyright:</strong> All work created for Helocity Tech (including Groquni AI, Shorcuteez, and Gamehub) is company property[cite: 12, 13].</li>
-                    <li><strong>Confidentiality:</strong> Never share Supabase or Vercel API keys[cite: 20, 34].</li>
-                </ul>
-                <p><em>(Scroll to read full document...)</em></p>
+        <div id="legalSection">
+            <div class="warning-text">NOTE: THIS AGREEMENT IS NOT TO BE RELEASED TO PUBLIC OR WILL FACE CHARGES OR PUNISHMENT</div>
+            
+            <div class="rules-container">
+                <div class="rules-content">
+                    <strong>Version 1 - Original | Company Rules & Regulations</strong>
+                    For Company personnel/Members Only [cite: 1, 2]
+
+                    - Any Member Will be directly fired if found harassing or not being friendly, if decided you will be given a second chance. [cite: 4]
+                    - If Company Employee, Executive, Director leaves compulsory to give a resignation letter prior by 2 days. [cite: 5]
+                    - We Will try to make everything Free except our needs for doing the project and getting paid on time. [cite: 6]
+                    - We are able to change the Rules & Regulations without notice and every member has to check and read It weekly if updated. [cite: 7]
+                    - Attendance has to be DAILY every day in the employee portal. [cite: 8]
+
+                    <strong>Copyright Laws - Section: Intellectual Property & Departure</strong> [cite: 9, 10]
+                    1. Ownership of Work (Copyright): All code, designs, logos, and AI models created for Helocity Tech (including Groquni AI, GroqMed AI, Shorcuteez, and Gamehub) are the property of the company. [cite: 11, 12, 13]
+                    2. Team Contribution: Any feature you build while a member of the team belongs to the Helocity Tech project. [cite: 14]
+                    3. No Copying: Members may not copy, re-upload, or sell Helocity Tech source code to other platforms (like their own Vercel or GitHub accounts) without the CEO's written permission. [cite: 15, 16]
+
+                    <strong>Exit Agreement</strong> [cite: 17]
+                    - The "No-Take" Rule: You may not take "internal-only" tools (like the Employee Portal code) to use for a different project. [cite: 19]
+                    - Confidentiality: You must not share private company information, such as Supabase API keys, database structures, or future project plans. [cite: 20]
+                    - Deletion of Access: All administrative access to GitHub, Vercel, and Supabase will be removed immediately upon departure. [cite: 21, 22]
+
+                    <strong>Official Code of Conduct</strong> [cite: 27]
+                    - The "24-Hour" Rule: All members should acknowledge important messages within 24 hours. [cite: 29]
+                    - Respect the Roles: If the Stock Handler says we are low on assets or the Lawyer flags a copyright issue, the team must listen. [cite: 30]
+                    - No "Ghosting": If you need a break, let the CEO or VP know. Don't just disappear! [cite: 31, 32]
+                    - Technical Responsibility: Secure the Keys. Never share Supabase or Vercel API keys. Report leaks immediately. [cite: 33, 34, 35]
+                    - Attendance & Deadlines: The Midnight Deadline - log attendance before 12:00 AM. [cite: 39, 40, 41]
+                    - Conflict Resolution: The Lawyer will review the "Rules & Regulations" for a fair solution. CEO has the final say. [cite: 49, 50, 51]
+                    
+                    <strong>(Once signed cannot be erased & after signing have to follow “The Rules & Regulations”)</strong> [cite: 53]
+                </div>
             </div>
             
             <div class="checkbox-container">
-                <input type="checkbox" id="acceptRules" onchange="checkRequirements()">
-                <label for="acceptRules">I have read and agree to the Helocity Tech Rules & Regulations.</label>
+                <input type="checkbox" id="acceptRules" onchange="updateUI()">
+                <label for="acceptRules">I, <span id="displaySignName">____</span>, agree to all Helocity Tech Rules & Regulations.</label>
             </div>
         </div>
 
-        <div id="employeeQuiz" class="quiz-container hidden">
-            <h3>HTML Competency Quiz (20 Questions)</h3>
-            <div id="htmlQuestions"></div>
-        </div>
-
-        <div id="stockQuiz" class="quiz-container hidden">
-            <h3>Stock Management Quiz (20 Questions)</h3>
-            <div id="stockQuestions"></div>
+        <div id="quizSection" class="hidden">
+            <h2 id="quizTitle"></h2>
+            <div id="questionsContainer"></div>
         </div>
 
         <button type="button" id="submitBtn" disabled>Submit Application</button>
@@ -83,66 +93,79 @@
 </div>
 
 <script>
-    // Questions arrays (placeholders for 20 each)
-    const htmlQuestions = ["What does HTML stand for?", "Which tag is for the largest heading?", "How do you link a page?", "Which tag ends an element?", "How to add BG color?", "Tag for main heading?", "Checkbox HTML code?", "Image tag?", "Nav links element?", "Alt text attribute?", "What is <br>?", "Footer element?", "Numbered list tag?", "Bulleted list tag?", "Text input tag?", "Important text tag?", "Line break tag?", "Document title tag?", "Unique ID attribute?", "Purpose of Doctype?"];
-    const stockQuestions = ["What is FIFO?", "What is a Stockout?", "Purpose of SKU?", "Define Lead Time.", "What is Safety Stock?", "What is JIT?", "Inventory turnover ratio?", "Primary goal of handling?", "High-demand placement?", "What is Cycle Count?", "Define Dead Stock.", "Purpose of a pallet?", "What is a Backorder?", "Raw vs Finished goods?", "What is a packing list?", "Benefit of barcodes?", "Define Carrying Cost.", "What is ABC Analysis?", "What is Bill of Lading?", "Why is labeling important?"];
+    const nameInput = document.getElementById('applicantName');
+    nameInput.addEventListener('input', () => {
+        document.getElementById('displaySignName').innerText = nameInput.value || "____";
+    });
 
-    function generateQuestions(containerId, questions) {
-        const container = document.getElementById(containerId);
-        questions.forEach((q, index) => {
-            container.innerHTML += `
-                <div class="question">
-                    <p>${index + 1}. ${q}</p>
-                    <input type="radio" name="${containerId}_q${index}" value="correct"> Correct Option<br>
-                    <input type="radio" name="${containerId}_q${index}" value="wrong"> Incorrect Option
-                </div>
-            `;
-        });
-    }
+    const questions = {
+        Employee: [
+            "What does HTML stand for?", "Which tag is used for the largest heading?", "How do you create a hyperlink?", 
+            "Which character is used to indicate an end tag?", "What is the correct HTML for adding a background color?",
+            "What element is used for the main heading?", "What is the HTML for a checkbox?", "How to insert an image?",
+            "Which element defines navigation links?", "Attribute for alt text?", "What does <br> do?",
+            "Element for document footer?", "Tag for numbered lists?", "Tag for bulleted lists?",
+            "Correct HTML for text input?", "Element for important text?", "Tag for line break?",
+            "Element for document title?", "Attribute for unique ID?", "Purpose of Doctype?"
+        ],
+        "Stock Handler": [
+            "What does FIFO stand for?", "What is a 'Stockout'?", "What is the purpose of a SKU?",
+            "Define 'Lead Time'.", "What is Safety Stock?", "What does JIT stand for?",
+            "What is inventory turnover ratio?", "Primary goal of stock handling?", "High-demand item placement?",
+            "What is a 'Cycle Count'?", "Define 'Dead Stock'.", "Purpose of a pallet?", "What is 'Backorder'?",
+            "Raw materials vs Finished goods?", "What is a packing list?", "Benefit of barcode scanning?",
+            "Define 'Carrying Cost'.", "What is 'ABC Analysis'?", "What is a Bill of Lading?", "Importance of labeling?"
+        ]
+    };
 
-    generateQuestions('htmlQuestions', htmlQuestions);
-    generateQuestions('stockQuestions', stockQuestions);
-
-    function checkRequirements() {
+    function updateUI() {
         const role = document.getElementById('roleSelect').value;
         const accepted = document.getElementById('acceptRules').checked;
+        const quizDiv = document.getElementById('quizSection');
+        const container = document.getElementById('questionsContainer');
         const submitBtn = document.getElementById('submitBtn');
 
-        // Show/Hide Quizzes based on role and acceptance
-        document.getElementById('employeeQuiz').classList.toggle('hidden', !(role === 'Employee' && accepted));
-        document.getElementById('stockQuiz').classList.toggle('hidden', !(role === 'Stock Handler' && accepted));
-        
-        // Enable submit button only if rules are accepted and role is selected
-        submitBtn.disabled = !(role && accepted);
+        if (role && accepted) {
+            quizDiv.classList.remove('hidden');
+            document.getElementById('quizTitle').innerText = `${role} Quiz (Score 15/20 to Pass)`;
+            container.innerHTML = "";
+            questions[role].forEach((q, i) => {
+                container.innerHTML += `
+                    <div class="question">
+                        <p><strong>${i+1}. ${q}</strong></p>
+                        <input type="radio" name="q${i}" value="correct"> Correct Answer Option<br>
+                        <input type="radio" name="q${i}" value="wrong"> Incorrect Answer Option
+                    </div>`;
+            });
+            submitBtn.disabled = false;
+        } else {
+            quizDiv.classList.add('hidden');
+            submitBtn.disabled = true;
+        }
     }
 
     document.getElementById('submitBtn').addEventListener('click', async () => {
-        const name = document.getElementById('applicantName').value;
+        const name = nameInput.value;
         const role = document.getElementById('roleSelect').value;
-        const quizId = role === 'Employee' ? 'htmlQuestions' : 'stockQuestions';
-        const score = document.querySelectorAll(`#${quizId} input[value="correct"]:checked`).length;
+        const score = document.querySelectorAll('input[value="correct"]:checked').length;
         const statusDiv = document.getElementById('status');
 
         if (score >= 15) {
-            statusDiv.innerText = "Processing hire...";
-            const emailMessage = `${name} ${role.toLowerCase()} is hired`;
-
+            statusDiv.innerHTML = "Sending hire notification...";
             const response = await fetch("https://formspree.io/f/maqlvbjk", {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: emailMessage, score: score + "/20" })
+                body: JSON.stringify({ message: `${name} ${role.toLowerCase()} is hired`, score: `${score}/20` })
             });
-
             if (response.ok) {
                 statusDiv.style.color = "#4caf50";
-                statusDiv.innerText = "Congratulations! You are hired.";
+                statusDiv.innerHTML = "HIRED! Welcome to the team.";
             }
         } else {
             statusDiv.style.color = "#ff5252";
-            statusDiv.innerText = `Score: ${score}/20. You need at least 15 to be hired.`;
+            statusDiv.innerText = `Score: ${score}/20. You did not meet the requirement.`;
         }
     });
 </script>
-
 </body>
 </html>
