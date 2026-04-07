@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Helocity Tech Hiring Portal</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #121212; color: #e0e0e0; max-width: 800px; margin: 40px auto; padding: 20px; }
+        .card { background: #1e1e1e; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        .hidden { display: none; }
+        input[type="text"], select { width: 100%; padding: 10px; margin: 10px 0 20px 0; border-radius: 4px; border: 1px solid #333; background: #2a2a2a; color: white; }
+        .quiz-container { border-top: 1px solid #333; padding-top: 20px; }
+        .question { margin-bottom: 15px; background: #252525; padding: 15px; border-radius: 5px; }
+        button { background: #0070f3; color: white; border: none; padding: 12px 25px; cursor: pointer; border-radius: 5px; font-weight: bold; width: 100%; }
+        button:hover { background: #005bc1; }
+        #status { margin-top: 20px; font-weight: bold; text-align: center; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Application Portal</h2>
+    <form id="applicationForm">
+        <label for="applicantName">Enter Your Name:</label>
+        <input type="text" id="applicantName" placeholder="e.g. John Doe" required>
+
+        <label for="roleSelect">Select Position:</label>
+        <select id="roleSelect" onchange="toggleQuiz()">
+            <option value="">-- Choose a Role --</option>
+            <option value="Employee">Employee</option>
+            <option value="Stock Handler">Stock Handler</option>
+        </select>
+
+        <div id="employeeQuiz" class="quiz-container hidden">
+            <h3>HTML Competency Quiz (20 Questions)</h3>
+            <div id="htmlQuestions"></div>
+        </div>
+
+        <div id="stockQuiz" class="quiz-container hidden">
+            <h3>Stock Management Quiz (20 Questions)</h3>
+            <div id="stockQuestions"></div>
+        </div>
+
+        <button type="button" id="submitBtn" style="margin-top:20px;">Submit Application</button>
+    </form>
+    <div id="status"></div>
+</div>
+
+<script>
+    const htmlQuestions = [
+        "What does HTML stand for?", "Which tag is used for the largest heading?", "How do you create a hyperlink?", 
+        "Which character is used to indicate an end tag?", "What is the correct HTML for adding a background color?",
+        "Choose the correct HTML element for the main heading:", "What is the correct HTML for creating a checkbox?",
+        "What is the correct HTML for inserting an image?", "Which HTML element defines navigation links?",
+        "In HTML, which attribute is used to specify an alternate text for an image?", "What does the <br> tag do?",
+        "Which HTML element is used to specify a footer for a document?", "How can you make a numbered list?",
+        "How can you make a bulleted list?", "What is the correct HTML for making a text input field?",
+        "Which HTML element is used to define important text?", "What is the correct HTML for inserting a line break?",
+        "Which HTML element defines the title of a document?", "Which attribute is used to provide a unique identifier for an element?",
+        "What is the purpose of the <!DOCTYPE html> declaration?"
+    ];
+
+    const stockQuestions = [
+        "What does FIFO stand for?", "What is a 'Stockout'?", "What is the purpose of a SKU?",
+        "Define 'Lead Time'.", "What is Safety Stock?", "What does JIT stand for in inventory?",
+        "What is an inventory turnover ratio?", "What is the primary goal of stock handling?",
+        "Where should high-demand items be placed?", "What is a 'Cycle Count'?",
+        "Define 'Dead Stock'.", "What is the purpose of a pallet?", "What does 'Backorder' mean?",
+        "What is the difference between raw materials and finished goods?", "What is a packing list?",
+        "What is the benefit of barcode scanning?", "Define 'Carrying Cost'.",
+        "What is an 'ABC Analysis' in stock?", "What is a Bill of Lading?", "Why is accurate labeling important?"
+    ];
+
+    function generateQuestions(containerId, questions) {
+        const container = document.getElementById(containerId);
+        questions.forEach((q, index) => {
+            container.innerHTML += `
+                <div class="question">
+                    <p>${index + 1}. ${q}</p>
+                    <input type="radio" name="q${index}" value="correct"> Correct Option<br>
+                    <input type="radio" name="q${index}" value="wrong"> Incorrect Option
+                </div>
+            `;
+        });
+    }
+
+    generateQuestions('htmlQuestions', htmlQuestions);
+    generateQuestions('stockQuestions', stockQuestions);
+
+    function toggleQuiz() {
+        const role = document.getElementById('roleSelect').value;
+        document.getElementById('employeeQuiz').classList.toggle('hidden', role !== 'Employee');
+        document.getElementById('stockQuiz').classList.toggle('hidden', role !== 'Stock Handler');
+    }
+
+    document.getElementById('submitBtn').addEventListener('click', async () => {
+        const name = document.getElementById('applicantName').value;
+        const role = document.getElementById('roleSelect').value;
+        const score = document.querySelectorAll('input[value="correct"]:checked').length;
+        const statusDiv = document.getElementById('status');
+
+        if (!name || !role) {
+            alert("Please provide your name and select a role.");
+            return;
+        }
+
+        if (score >= 15) {
+            statusDiv.innerText = "Processing hire...";
+            
+            // Format the specific email message you requested
+            const emailMessage = `${name} ${role.toLowerCase()} is hired`;
+
+            const response = await fetch("https://formspree.io/f/maqlvbjk", {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    subject: "New Hire Alert",
+                    message: emailMessage
+                })
+            });
+
+            if (response.ok) {
+                statusDiv.style.color = "#4caf50";
+                statusDiv.innerText = "Congratulations! You are hired.";
+            } else {
+                statusDiv.innerText = "Error sending data. Please try again.";
+            }
+        } else {
+            statusDiv.style.color = "#ff5252";
+            statusDiv.innerText = `Score: ${score}/20. You need at least 15 to be hired.`;
+        }
+    });
+</script>
+
+</body>
+</html>
