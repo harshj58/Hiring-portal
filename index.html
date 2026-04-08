@@ -51,8 +51,6 @@
         .checkbox-container:hover{background:#222;}
         input[type="checkbox"]{width:20px;height:20px;margin-top:2px;accent-color:var(--accent);cursor:pointer;flex-shrink:0;}
         .checkbox-container label{font-size:.9rem;line-height:1.5;cursor:pointer;color:#ccc;}
- 
-        /* Timer */
         .timer-wrap{margin-bottom:6px;}
         .timer-bar-bg{background:var(--border);border-radius:4px;height:6px;overflow:hidden;}
         .timer-bar-fill{height:100%;width:100%;border-radius:4px;
@@ -63,7 +61,6 @@
             text-align:right;margin-top:5px;margin-bottom:20px;}
         .timer-label span{color:var(--text);font-weight:700;}
         .timer-label.urgent span{color:var(--danger);}
- 
         #quizArea{margin-top:36px;}
         .quiz-header{font-size:1.4rem;font-weight:800;color:var(--accent2);margin-bottom:8px;}
         .quiz-meta{font-family:'Space Mono',monospace;font-size:.75rem;color:var(--muted);
@@ -197,26 +194,28 @@ NOTE: THIS AGREEMENT IS NOT TO BE RELEASED TO PUBLIC OR WILL FACE CHARGES OR PUN
         <div id="questions"></div>
         <button class="submit-btn" id="submitBtn" onclick="processResult()" disabled>Submit Application</button>
     </div>
- 
     <div id="status"></div>
 </div>
  
 <script>
-// ── Quiz bank with hand-crafted plausible distractors ──────────────────────
+// ── Quiz bank ──────────────────────────────────────────────────────────────
+// Each entry: { q, a (correct answer plain text), w (3 wrong answers plain text) }
+// NO HTML entities in answer strings — plain text only.
+// The display can show < > but values are stored & compared as plain strings.
 const quizData = {
     Employee: [
         {q:"What does HTML stand for?",
          a:"HyperText Markup Language",
          w:["HyperText Markdown Language","HighText Machine Language","HyperTransfer Markup Layout"]},
         {q:"Which tag is used for the largest heading?",
-         a:"&lt;h1&gt;",
-         w:["&lt;h6&gt;","&lt;heading&gt;","&lt;head&gt;"]},
+         a:"<h1>",
+         w:["<h6>","<heading>","<head>"]},
         {q:"Which tag defines a hyperlink?",
-         a:"&lt;a&gt;",
-         w:["&lt;link&gt;","&lt;href&gt;","&lt;nav&gt;"]},
+         a:"<a>",
+         w:["<link>","<href>","<nav>"]},
         {q:"What is the correct tag for a line break?",
-         a:"&lt;br&gt;",
-         w:["&lt;lb&gt;","&lt;break&gt;","&lt;newline&gt;"]},
+         a:"<br>",
+         w:["<lb>","<break>","<newline>"]},
         {q:"Which character indicates an end/closing tag?",
          a:"/",
          w:["\\","!","-"]},
@@ -224,47 +223,47 @@ const quizData = {
          a:"target='_blank'",
          w:["target='_new'","href='_blank'","open='newtab'"]},
         {q:"Which tag creates a bulleted (unordered) list?",
-         a:"&lt;ul&gt;",
-         w:["&lt;ol&gt;","&lt;bl&gt;","&lt;list&gt;"]},
+         a:"<ul>",
+         w:["<ol>","<bl>","<list>"]},
         {q:"Which tag creates a numbered (ordered) list?",
-         a:"&lt;ol&gt;",
-         w:["&lt;ul&gt;","&lt;nl&gt;","&lt;numlist&gt;"]},
+         a:"<ol>",
+         w:["<ul>","<nl>","<numlist>"]},
         {q:"What is the correct HTML for a checkbox?",
-         a:"&lt;input type='checkbox'&gt;",
-         w:["&lt;input type='check'&gt;","&lt;checkbox&gt;","&lt;input type='tick'&gt;"]},
+         a:"<input type='checkbox'>",
+         w:["<input type='check'>","<checkbox>","<input type='tick'>"]},
         {q:"Which tag embeds an image?",
-         a:"&lt;img&gt;",
-         w:["&lt;image&gt;","&lt;pic&gt;","&lt;src&gt;"]},
+         a:"<img>",
+         w:["<image>","<pic>","<src>"]},
         {q:"Which attribute provides alternative text for images?",
          a:"alt",
          w:["title","desc","caption"]},
         {q:"Which tag defines the browser tab title?",
-         a:"&lt;title&gt;",
-         w:["&lt;tab&gt;","&lt;header&gt;","&lt;meta&gt;"]},
+         a:"<title>",
+         w:["<tab>","<header>","<meta>"]},
         {q:"Which semantic element is used for a site footer?",
-         a:"&lt;footer&gt;",
-         w:["&lt;bottom&gt;","&lt;section&gt;","&lt;div id='footer'&gt;"]},
+         a:"<footer>",
+         w:["<bottom>","<section>","<div id='footer'>"]},
         {q:"Which tag creates a dropdown list?",
-         a:"&lt;select&gt;",
-         w:["&lt;dropdown&gt;","&lt;input type='select'&gt;","&lt;option&gt;"]},
+         a:"<select>",
+         w:["<dropdown>","<input type='select'>","<option>"]},
         {q:"Which attribute gives an element a unique identifier?",
          a:"id",
          w:["class","name","key"]},
-        {q:"What is the purpose of &lt;!DOCTYPE html&gt;?",
+        {q:"What is the purpose of <!DOCTYPE html>?",
          a:"Declares the document type as HTML5",
          w:["Links an external stylesheet","Defines the page language","Sets the character encoding"]},
         {q:"Which tag groups block-level elements?",
-         a:"&lt;div&gt;",
-         w:["&lt;span&gt;","&lt;section&gt;","&lt;group&gt;"]},
+         a:"<div>",
+         w:["<span>","<section>","<group>"]},
         {q:"Which tag makes text bold and semantically important?",
-         a:"&lt;strong&gt;",
-         w:["&lt;b&gt;","&lt;bold&gt;","&lt;em&gt;"]},
+         a:"<strong>",
+         w:["<b>","<bold>","<em>"]},
         {q:"Which tag defines a table row?",
-         a:"&lt;tr&gt;",
-         w:["&lt;td&gt;","&lt;th&gt;","&lt;row&gt;"]},
+         a:"<tr>",
+         w:["<td>","<th>","<row>"]},
         {q:"Which tag defines a table data cell?",
-         a:"&lt;td&gt;",
-         w:["&lt;tr&gt;","&lt;cell&gt;","&lt;tc&gt;"]}
+         a:"<td>",
+         w:["<tr>","<cell>","<tc>"]}
     ],
     "Stock Handler": [
         {q:"What does FIFO stand for?",
@@ -331,19 +330,19 @@ const quizData = {
 };
  
 // ── State ──────────────────────────────────────────────────────────────────
+// correctIndex[questionIdx] = the shuffled option index (0-3) that is correct
+let correctIndex = {};
 let quizReady = false;
-let generatedOptions = {};
 let timerInterval = null;
 let secondsLeft = 200;
 let timerExpired = false;
  
 // ── Form change ────────────────────────────────────────────────────────────
 function onFormChange() {
-    const role  = document.getElementById('role').value;
+    const role   = document.getElementById('role').value;
     const agreed = document.getElementById('agree').checked;
-    const email = document.getElementById('applicantEmail').value.trim();
+    const email  = document.getElementById('applicantEmail').value.trim();
     const quizArea = document.getElementById('quizArea');
- 
     if (role && agreed && email) {
         quizArea.classList.remove('hidden');
         document.getElementById('quizTitle').innerText = role + " Hiring Exam";
@@ -353,7 +352,7 @@ function onFormChange() {
     } else {
         quizArea.classList.add('hidden');
         quizReady = false;
-        generatedOptions = {};
+        correctIndex = {};
         clearTimer();
     }
 }
@@ -362,7 +361,6 @@ function onFormChange() {
 function clearTimer() {
     if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
 }
- 
 function startTimer() {
     clearTimer();
     secondsLeft = 200;
@@ -378,55 +376,75 @@ function startTimer() {
         }
     }, 1000);
 }
- 
 function renderTimer() {
     const m = Math.floor(secondsLeft / 60);
     const s = secondsLeft % 60;
-    document.getElementById('timerCount').textContent = m + ":" + String(s).padStart(2,'0');
+    document.getElementById('timerCount').textContent = m + ":" + String(s).padStart(2, '0');
     const pct = (secondsLeft / 200) * 100;
     const bar = document.getElementById('timerBar');
     bar.style.width = pct + '%';
     const lbl = document.getElementById('timerLabel');
     if (secondsLeft <= 40) { bar.classList.add('warn'); lbl.classList.add('urgent'); }
-    else { bar.classList.remove('warn'); lbl.classList.remove('urgent'); }
+    else                   { bar.classList.remove('warn'); lbl.classList.remove('urgent'); }
 }
- 
 function onTimerExpired() {
     document.getElementById('submitBtn').disabled = true;
     document.querySelectorAll('input[type="radio"]').forEach(r => r.disabled = true);
     const s = document.getElementById('status');
     s.className = 'fail';
+    s.style.display = 'block';
     s.textContent = "⏰ Time's up! You didn't finish within 200 seconds. Please reload the page to try again.";
 }
  
 // ── Load quiz ──────────────────────────────────────────────────────────────
+function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+ 
+// Escape plain text for safe insertion into HTML
+function esc(str) {
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+ 
 function loadQuiz(role) {
     const qDiv = document.getElementById('questions');
     const btn  = document.getElementById('submitBtn');
     quizReady = false;
     btn.disabled = true;
-    generatedOptions = {};
+    correctIndex = {};
     clearTimer();
     document.getElementById('progressBar').style.width = '0%';
  
     const questions = quizData[role];
     qDiv.innerHTML = "";
  
-    questions.forEach((item, idx) => {
-        // Decode HTML entities for comparison purposes
-        const correct = item.a;
-        const opts = shuffle([correct, ...item.w]);
-        generatedOptions[idx] = { correct };
+    questions.forEach((item, qIdx) => {
+        // Build array of 4 plain-text options, shuffled
+        const allOpts = shuffle([item.a, ...item.w]);
  
-        const optHTML = opts.map(opt => `
+        // Record WHICH index (0-3) holds the correct answer
+        correctIndex[qIdx] = allOpts.indexOf(item.a);
+ 
+        // Build option HTML — radio value is the OPTION INDEX (0-3), not the text
+        const optHTML = allOpts.map((opt, oIdx) => `
             <label class="option-label">
-                <input type="radio" name="q${idx}" value="${safeVal(opt)}" onchange="updateProgress()">
-                <span>${opt}</span>
+                <input type="radio" name="q${qIdx}" value="${oIdx}" onchange="updateProgress()">
+                <span>${esc(opt)}</span>
             </label>`).join('');
  
         qDiv.innerHTML += `
             <div class="question-block">
-                <span class="question-text">${idx+1}. ${item.q}</span>
+                <span class="question-text">${qIdx + 1}. ${esc(item.q)}</span>
                 <div class="options-grid">${optHTML}</div>
             </div>`;
     });
@@ -437,27 +455,13 @@ function loadQuiz(role) {
     startTimer();
 }
  
-// ── Helpers ────────────────────────────────────────────────────────────────
-function shuffle(arr) {
-    const a = [...arr];
-    for (let i = a.length-1; i > 0; i--) {
-        const j = Math.floor(Math.random()*(i+1));
-        [a[i],a[j]] = [a[j],a[i]];
-    }
-    return a;
-}
- 
-function safeVal(str) {
-    return String(str).replace(/"/g,'&quot;');
-}
- 
 function updateProgress() {
     const total = quizData[document.getElementById('role').value]?.length || 20;
     const answered = document.querySelectorAll('.options-grid input[type="radio"]:checked').length;
-    document.getElementById('progressBar').style.width = ((answered/total)*100)+'%';
+    document.getElementById('progressBar').style.width = ((answered / total) * 100) + '%';
 }
  
-// ── Submit ─────────────────────────────────────────────────────────────────
+// ── Submit & score ─────────────────────────────────────────────────────────
 async function processResult() {
     if (timerExpired) return;
  
@@ -468,14 +472,16 @@ async function processResult() {
  
     if (!name)  { alert("Please enter your full name."); return; }
     if (!email) { alert("Please enter your email address."); return; }
-    if (!quizReady) { alert("Quiz is not ready, please wait."); return; }
+    if (!quizReady) { alert("Quiz is not ready yet."); return; }
  
-    // Score
+    // ── Score: compare selected VALUE (option index) against correctIndex ──
     let score = 0;
     const total = quizData[role].length;
     for (let i = 0; i < total; i++) {
         const sel = document.querySelector(`input[name="q${i}"]:checked`);
-        if (sel && sel.value === generatedOptions[i].correct) score++;
+        if (sel && parseInt(sel.value, 10) === correctIndex[i]) {
+            score++;
+        }
     }
  
     clearTimer();
@@ -484,10 +490,9 @@ async function processResult() {
  
     if (score >= 15) {
         statusEl.className = 'info';
-        statusEl.innerHTML = "⏳ Submitting your application...";
         statusEl.style.display = 'block';
+        statusEl.innerHTML = "⏳ Submitting your application...";
  
-        // Send to Formspree
         try {
             await fetch("https://formspree.io/f/maqlvbjk", {
                 method: "POST",
@@ -502,7 +507,7 @@ async function processResult() {
                 })
             });
         } catch(e) {
-            console.warn("Formspree submission error:", e);
+            console.warn("Formspree error:", e);
         }
  
         statusEl.className = 'success';
@@ -512,16 +517,18 @@ async function processResult() {
             `<div class="email-note">` +
             `📧 An email from <strong>harshj2014@outlook.com</strong> will be sent to your email address:<br>` +
             `<strong>${email}</strong><br><br>` +
-            `This email will confirm your administered test and outline the next steps in your onboarding. Please check your inbox and spam folder.` +
+            `This email will confirm your administered test and outline the next steps in your onboarding. ` +
+            `Please check your inbox and spam folder.` +
             `</div>`;
  
     } else {
         statusEl.className = 'fail';
+        statusEl.style.display = 'block';
         statusEl.textContent =
             `❌ Sorry ${name}, you scored ${score}/${total}. ` +
             `You need at least 15 correct answers to pass. Please try again.`;
         btn.disabled = false;
-        startTimer(); // restart timer for retry
+        startTimer();
     }
 }
 </script>
